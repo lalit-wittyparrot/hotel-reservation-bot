@@ -34,15 +34,40 @@ server.post('/api/messages', connector.listen());
 //     session.send("You said: %s", session.message.text);
 // })
 // .set('storage', cosmosStorage);
-var bot = new builder.UniversalBot(connector);
+// var bot = new builder.UniversalBot(connector);
 
-bot.dialog('/', [
-    // Step 1
+// bot.dialog('/', [
+//     // Step 1
+//     function (session) {
+//         builder.Prompts.text(session, 'Hi! What is your name?');
+//     },
+//     // Step 2
+//     function (session, results) {
+//         session.endDialog(`Hello ${results.response}!`);
+//     }
+// ]);
+
+var inMemoryStorage = new builder.MemoryBotStorage();
+
+// This is a dinner reservation bot that uses a waterfall technique to prompt users for input.
+var bot = new builder.UniversalBot(connector, [
     function (session) {
-        builder.Prompts.text(session, 'Hi! What is your name?');
+        session.send("Welcome to the dinner reservation.");
+        builder.Prompts.time(session, "Please provide a reservation date and time (e.g.: June 6th at 5pm)");
     },
-    // Step 2
     function (session, results) {
-        session.endDialog(`Hello ${results.response}!`);
+        session.dialogData.reservationDate = builder.EntityRecognizer.resolveTime([results.response]);
+        builder.Prompts.text(session, "How many people are in your party?");
+    },
+    function (session, results) {
+        session.dialogData.partySize = results.response;
+        builder.Prompts.text(session, "Whose name will this reservation be under?");
+    },
+    function (session, results) {
+        session.dialogData.reservationName = results.response;
+
+        // Process request and display reservation details
+        session.send(`Reservation confirmed. Reservation details: <br/>Date/Time: ${session.dialogData.reservationDate} <br/>Party size: ${session.dialogData.partySize} <br/>Reservation name: ${session.dialogData.reservationName}`);
+        session.endDialog();
     }
-]);
+]).set('storage', inMemoryStorage); // Register in-memory storage
