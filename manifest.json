@@ -1,0 +1,42 @@
+{
+    "$schema": "https://statics.teams.microsoft.com/sdk/v1.2/manifest/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.2",
+    "version": "1.0.0",
+    "id": "3e8992de-cedf-4c65-8510-f7e1bf3b1f0d",
+    "packageName": "Bot-for-team",
+    "developer": {
+        "name": "Lalit",
+        "websiteUrl": "https://www.microsoft.com",
+        "privacyUrl": "https://www.microsoft.com/privacy",
+        "termsOfUseUrl": "https://www.microsoft.com/termsofuse"
+    },
+    "icons": {
+        "color": "contoso96x96.png",
+        "outline": "contoso20x20.png"
+    },
+    "name": {
+        "short": "sample bot",
+        "full": ""
+    },
+    "description": {
+        "short": "for teams",
+        "full": "bot for teams"
+    },
+    "accentColor": "#FFFFFF",
+    "bots": [
+        {
+            "botId": "f7b8212d-effe-459d-b3fd-a42f7615bc5b",
+            "scopes": [
+                "team",
+                "personal"
+            ]
+        }
+    ],
+    "permissions": [
+        "identity",
+        "messageTeamMembers"
+    ],
+    "validDomains": [
+        "https://ada5736f.ngrok.io"
+    ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "first-bot",
+  "version": "1.0.0",
+  "description": "First bot using node-js",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lalit-wittyparrot/sampleBot.git"
+  },
+  "keywords": [
+    "bot"
+  ],
+  "author": "Lalit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lalit-wittyparrot/sampleBot/issues"
+  },
+  "homepage": "https://github.com/lalit-wittyparrot/sampleBot#readme",
+  "dependencies": {
+    "botbuilder": "^3.14.1",
+    "botbuilder-azure": "^3.0.4",
+    "restify": "^7.1.1"
+  }
+}
