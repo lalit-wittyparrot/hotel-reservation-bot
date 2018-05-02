@@ -61,6 +61,10 @@ var dinnerMenu = {
      "Check out": {
         Description: "Check out",
         Price: 0 // Order total. Updated as items are added to order.
+    },
+     "Cancel order": { // Cancel the order and back to Main Menu
+        Description: "Cancel order",
+        Price: 0
     }
 };
 
@@ -155,6 +159,22 @@ bot.dialog("addDinnerItem", [
                 session.replaceDialog("addDinnerItem", { reprompt: true }); // Repeat dinner menu
             }
         }
+    },
+    // Last step
+    function(session, results){
+        if(results.response){
+            if(results.response.entity.match(/^check out$/i)){
+                session.endDialog("Checking out...");
+            }
+            else if(results.response.entity.match(/^cancel/i)){
+                // Cancel the order and start "mainMenu" dialog.
+                session.cancelDialog(0, "mainMenu");
+            }
+            else {
+                //...add item to list and prompt again...
+                session.replaceDialog("addDinnerItem", { reprompt: true }); // Repeat dinner menu.
+            }
+        }
     }
 ])
 .reloadAction(
@@ -163,3 +183,4 @@ bot.dialog("addDinnerItem", [
         matches: /^start over$/i
     }
 );
+
