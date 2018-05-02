@@ -113,9 +113,10 @@ bot.dialog('askForPartySize', [
         builder.Prompts.text(session, "How many people are in your party?");
     },
     function (session, results) {
-        session.endDialogWithResult(results);
+       session.endDialogWithResult(results);
     }
 ])
+.beginDialogAction('partySizeHelpAction', 'partySizeHelp', { matches: /^help$/i });
 
 // Dialog to ask for the reservation name.
 bot.dialog('askForReserverName', [
@@ -126,3 +127,31 @@ bot.dialog('askForReserverName', [
         session.endDialogWithResult(results);
     }
 ]);
+
+
+
+// Context Help dialog for party size
+bot.dialog('partySizeHelp', function(session, args, next) {
+    var msg = "Party size help: Our restaurant can support party sizes up to 150 members.";
+    session.endDialog(msg);
+})
+
+//The dialog stack is cleared and this dialog is invoked when the user enters 'help'.
+// bot.dialog('help', function (session, args, next) {
+//     session.endDialog("This is a bot that can help you make a dinner reservation. <br/>Please say 'next' to continue");
+// })
+// .triggerAction({
+//     matches: /^help$/i,
+// });
+
+bot.dialog('help', function (session, args, next) {
+    session.endDialog("This is a bot that can help you make a dinner reservation. <br/>Please say 'next' to continue");
+})
+.triggerAction({
+    matches: /^help$/i,
+    onSelectAction: (session, args, next) => {
+        // Add the help dialog to the dialog stack 
+        // (override the default behavior of replacing the stack)
+        session.beginDialog(args.action, args);
+    }
+});
